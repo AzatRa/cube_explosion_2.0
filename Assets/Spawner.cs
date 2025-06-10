@@ -26,15 +26,15 @@ public class Spawner : MonoBehaviour
 
             if (cube != null)
             {
-                cube.SetColorChanger(colorChanger);
-
                 float newMass = mass / _halver;
                 cube.SetMass(newMass);
 
-                if (cube.ColorChanger != null)
+                if (cube.ColorChanger == null)
                 {
-                    cube.ChangeColor();
+                    cube.SetColorChanger(colorChanger);
                 }
+
+                cube.ChangeColor();
             }
         }
     }

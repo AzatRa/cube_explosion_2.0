@@ -3,17 +3,7 @@ using UnityEngine.UIElements;
 
 public class Exploder : MonoBehaviour
 {
-    public void Explode(Rigidbody rigidbody, float minForce, float maxForce)
-    {
-        if (rigidbody == null)
-            return;
-
-        Vector3 direction = (rigidbody.transform.position - transform.position).normalized;
-        float force = Random.Range(minForce, maxForce);
-        rigidbody.AddForce(direction * force + Vector3.up * 1f, ForceMode.Impulse);
-    }
-
-    public void ExplodeWithoutDivision(Vector3 explosionCenter, float explosionRadius, float minForce, float maxForce, Vector3 scale)
+    public void Explode(Rigidbody rigidbody, Vector3 explosionCenter, float minForce, float maxForce, float explosionRadius, Vector3 scale)
     {
         float dividerForMediumSize = 3f;
         float randomForce = Random.Range(minForce, maxForce + 1);
@@ -27,7 +17,7 @@ public class Exploder : MonoBehaviour
 
         foreach (var collider in overlappedColliders)
         {
-            Rigidbody rigidbody = collider.attachedRigidbody;
+            rigidbody = collider.attachedRigidbody;
 
             if (rigidbody != null)
             {

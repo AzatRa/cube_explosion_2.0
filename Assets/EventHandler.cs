@@ -18,29 +18,7 @@ public class EventHandler : MonoBehaviour
     private float _splitChance = 1f;
     private int _halver = 2;
     
-    private event Action<Cube> OnHit;
-
-    private void OnEnable()
-    {
-        OnHit += HandleHit;
-    }
-
-    private void OnDisable()
-    {
-        OnHit -= HandleHit;
-    }
-
     public void Hit(Cube cube)
-    {
-        OnHit?.Invoke(cube);
-    }
-
-    private void HandleHit(Cube cube)
-    {
-        StartCoroutine(HitCoroutine(cube));
-    }
-
-    private IEnumerator HitCoroutine(Cube cube)
     {
         float random = UnityEngine.Random.value;
         Debug.Log($"random={random}, splitChance={_splitChance}");
@@ -56,20 +34,18 @@ public class EventHandler : MonoBehaviour
             if (_spawner != null && cube.ColorChanger != null)
                 _spawner.Spawn(explosionCenter, localScale, _minNewCubes, _maxNewCubes, cube.ColorChanger, mass);
 
-            yield return new WaitForSeconds(0.2f);
-
             if (_exploder != null && cube.TryGetComponent(out Rigidbody rigidbody) && _explodeEffector != null)
             {
-                _exploder.Explode(rigidbody, _minExplosionForce, _maxExplosionForce);
+                _exploder.Explode(rigidbody, explosionCenter, _minExplosionForce, _maxExplosionForce, _explosionRadius, localScale);
                 _explodeEffector.Explode(explosionCenter);
             }
         }
         else
         {
-            if (_explodeEffector != null)
+            if (_exploder != null && cube.TryGetComponent(out Rigidbody rigidbody) && _explodeEffector != null)
             {
-                _exploder.ExplodeWithoutDivision(explosionCenter, _explosionRadius, _minExplosionForce, _maxExplosionForce, localScale);
-                _explodeEffector.Explode(cube.transform.position);
+                _exploder.Explode(rigidbody, explosionCenter, _minExplosionForce, _maxExplosionForce, _explosionRadius, localScale);
+                _explodeEffector.Explode(explosionCenter);
             }
         }
 

@@ -9,11 +9,11 @@ public class Raycaster : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(Shoot());
+            Shoot();
         }
     }
 
-    private IEnumerator Shoot()
+    private void Shoot()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -27,7 +27,5 @@ public class Raycaster : MonoBehaviour
                 _eventHandler.Hit(cube);
             }
         }
-
-        yield return null;
     }
 }
