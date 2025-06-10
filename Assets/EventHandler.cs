@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class EventHandler : MonoBehaviour
@@ -20,8 +18,7 @@ public class EventHandler : MonoBehaviour
     
     public void Hit(Cube cube)
     {
-        float random = UnityEngine.Random.value;
-        Debug.Log($"random={random}, splitChance={_splitChance}");
+        float random = Random.value;
 
         Vector3 explosionCenter = cube.transform.position;
         Vector3 localScale = cube.transform.localScale;
@@ -31,22 +28,18 @@ public class EventHandler : MonoBehaviour
         {
             _splitChance /= _halver;
 
-            if (_spawner != null && cube.ColorChanger != null)
-                _spawner.Spawn(explosionCenter, localScale, _minNewCubes, _maxNewCubes, cube.ColorChanger, mass);
+            int count = Random.Range(_minNewCubes, _maxNewCubes + 1);
 
-            if (_exploder != null && cube.TryGetComponent(out Rigidbody rigidbody) && _explodeEffector != null)
-            {
-                _exploder.Explode(rigidbody, explosionCenter, _minExplosionForce, _maxExplosionForce, _explosionRadius, localScale);
-                _explodeEffector.Explode(explosionCenter);
-            }
+            if (_spawner != null)
+                _spawner.Spawn(explosionCenter, localScale, count, mass);
         }
-        else
+
+        float randomForce = Random.Range(_minExplosionForce, _maxExplosionForce + 1);
+
+        if (_exploder != null && cube.TryGetComponent(out Rigidbody rigidbody) && _explodeEffector != null)
         {
-            if (_exploder != null && cube.TryGetComponent(out Rigidbody rigidbody) && _explodeEffector != null)
-            {
-                _exploder.Explode(rigidbody, explosionCenter, _minExplosionForce, _maxExplosionForce, _explosionRadius, localScale);
-                _explodeEffector.Explode(explosionCenter);
-            }
+            _exploder.Explode(rigidbody, explosionCenter, randomForce, _explosionRadius, localScale);
+            _explodeEffector.Explode(explosionCenter);
         }
 
         Destroy(cube.gameObject);

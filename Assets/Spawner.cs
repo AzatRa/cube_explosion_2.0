@@ -6,9 +6,8 @@ public class Spawner : MonoBehaviour
 
     private float _halver = 2f;
 
-    public void Spawn(Vector3 position, Vector3 scale, int minCount, int maxCount, ColorChanger colorChanger, float mass)
+    public void Spawn(Vector3 position, Vector3 scale, int count, float mass)
     {
-        int count = Random.Range(minCount, maxCount + 1);
         Vector3 newScale = scale / _halver;
 
         for (int i = 0; i < count; i++)
@@ -28,12 +27,6 @@ public class Spawner : MonoBehaviour
             {
                 float newMass = mass / _halver;
                 cube.SetMass(newMass);
-
-                if (cube.ColorChanger == null)
-                {
-                    cube.SetColorChanger(colorChanger);
-                }
-
                 cube.ChangeColor();
             }
         }
