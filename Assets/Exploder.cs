@@ -10,7 +10,6 @@ public class Exploder : MonoBehaviour
         float scaleFactor = (scale.x + scale.y + scale.z) / dividerForMediumSize;
         float explosionRadiusForObject = explosionRadius * (1f / scaleFactor);
         float maxForce = force * (1f / scaleFactor);
-        Debug.Log($"scaleFactor = {scaleFactor}, explosionRadiusForObject = {explosionRadiusForObject}, maxForceForObject = {maxForce}");
 
         Collider[] overlappedColliders = Physics.OverlapSphere(explosionCenter, explosionRadius);
 
