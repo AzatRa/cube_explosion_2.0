@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            Vector3 offset = new Vector3(
+            Vector3 offset = new(
                 Random.Range(-newScale.x / _halver, newScale.x / _halver),
                 Random.Range(-newScale.y / _halver, newScale.y / _halver),
                 Random.Range(-newScale.z / _halver, newScale.z / _halver)
@@ -27,7 +27,9 @@ public class Spawner : MonoBehaviour
             {
                 float newMass = mass / _halver;
                 cube.SetMass(newMass);
-                cube.ChangeColor();
+
+                Color color = new(Random.value, Random.value, Random.value);
+                cube.ChangeColor(color);
             }
         }
     }

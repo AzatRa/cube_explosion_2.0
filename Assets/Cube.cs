@@ -20,11 +20,11 @@ public class Cube : MonoBehaviour
         }
     }
 
-    public void ChangeColor()
+    public void ChangeColor(Color color)
     {
         if (_renderer != null)
         {
-            _renderer.material.color = new Color(Random.value, Random.value, Random.value);
+            _renderer.material.color = color;
         }
     }
 }
