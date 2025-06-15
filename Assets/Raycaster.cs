@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Raycaster : MonoBehaviour
@@ -20,9 +19,8 @@ public class Raycaster : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hitInfo))
         {
             GameObject hitObject = hitInfo.collider.gameObject;
-            Cube cube = hitObject.GetComponent<Cube>();
-
-            if (cube != null)
+            
+            if (hitObject.TryGetComponent<Cube>(out var cube))
             {
                 _eventHandler.Hit(cube);
             }

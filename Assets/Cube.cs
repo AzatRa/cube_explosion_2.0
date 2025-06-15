@@ -5,6 +5,9 @@ public class Cube : MonoBehaviour
 {
     private Rigidbody _rigidbody;
     private Renderer _renderer;
+    private float _splitChance = 1f;
+
+    public float SplitChance => _splitChance;
 
     private void Awake()
     {
@@ -26,5 +29,10 @@ public class Cube : MonoBehaviour
         {
             _renderer.material.color = color;
         }
+    }
+    
+    public void SetSplitChance(float splitChance)
+    {
+        _splitChance = splitChance;
     }
 }

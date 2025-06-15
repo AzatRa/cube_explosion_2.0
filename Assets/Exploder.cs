@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Exploder : MonoBehaviour
 {
-    public void Explode(Rigidbody rigidbody, Vector3 explosionCenter, float force, float explosionRadius, Vector3 scale)
+    public void Explode(Vector3 explosionCenter, float force, float explosionRadius, Vector3 scale)
     {
         float dividerForMediumSize = 3f;
 
@@ -15,12 +14,11 @@ public class Exploder : MonoBehaviour
 
         foreach (var collider in overlappedColliders)
         {
-            rigidbody = collider.attachedRigidbody;
+            Rigidbody rigidbody = collider.attachedRigidbody;
 
             if (rigidbody != null)
             {
-                float distance = Vector3.Distance(rigidbody.position, explosionCenter);
-                float normalizedDistance = Mathf.Clamp01(distance / explosionRadiusForObject);
+                float normalizedDistance = Mathf.Clamp01(Vector3Extensions.SqrDistance(explosionCenter, rigidbody.position) / explosionRadiusForObject);
                 float forceForObject = Mathf.Lerp(maxForce, 0, normalizedDistance);
 
                 Vector3 direction = (rigidbody.transform.position - explosionCenter).normalized;
